@@ -118,13 +118,19 @@ namespace Xadrez
                 throw new TabuleiroExeption("Digite algum valor");
             }
 
-            posicaoDigitada.Split();
+            posicaoDigitada = posicaoDigitada.Trim();
 
-            string digitado = posicaoDigitada[0].ToString().ToUpper();
+            if (posicaoDigitada.Length != 2)
+            {
+                throw new TabuleiroExeption("Posição incorreta! Digite no formato letra + número (ex: A1).");
+            }
 
-            char coluna = digitado[0];
+            char coluna = char.ToUpper(posicaoDigitada[0]);
 
-            int linha = int.Parse(posicaoDigitada[1] + "");
+            if (coluna < 'A' || coluna > 'H' || !int.TryParse(posicaoDigitada[1].ToString(), out int linha) || linha < 1 || linha > 8)
+            {
+                throw new TabuleiroExeption("Posição incorreta! Digite no formato letra + número (ex: A1).");
+            }
 
             return new PosicaoXadrez(coluna, linha);
         }
